@@ -20,6 +20,12 @@ export const addSetHeadingCommands = (plugin: o.Plugin) => {
 			id: `grab-bag-set-heading-${headingNo}`,
 			name: `Set heading ${headingNo}`,
 			callback: setHeading(plugin, headings[i]),
+			hotkeys: [
+        {
+          modifiers: ['Mod'],
+          key: `${headingNo}`,
+        },
+      ],
 		});
 	}
 };

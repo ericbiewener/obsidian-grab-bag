@@ -17,6 +17,17 @@ const MANIFEST = "manifest.json";
 
 const postBuild = async () => {
 	await fs.copyFile(path.join(MANIFEST), path.join(OUT_DIR, MANIFEST));
+	await Promise.all([
+		fs.copy(
+			path.join(OUT_DIR),
+			"/Users/ericbiewener/Drive/Notes/.obsidian/plugins/grab-bag"
+		),
+		fs.copy(
+			path.join(OUT_DIR),
+			"/Users/ericbiewener/Drive/π Archive/Deep Freeze/Past Jobs/Data/.obsidian/plugins/grab-bag"
+		),
+	]);
+	console.info("✅ Copied plugin to vault.");
 };
 
 esbuild
