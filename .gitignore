@@ -21,3 +21,4 @@ data.json
 
 dist
 .DS_Store
+.env
