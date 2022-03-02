@@ -8,8 +8,7 @@ import path from "path";
 import assert from "assert"
 
 dotenv.config()
-assert(process.env.NOTEBOOK, "Missing NOTEBOOK env var")
-assert(process.env.PRIVATE, "Missing PRIVATE env var")
+assert(process.env.VAULTS, "Missing VAULTS env var")
 
 
 const banner = `/*
@@ -22,21 +21,16 @@ const isProd = process.env.NODE_ENV === "production";
 
 const OUT_DIR = "dist";
 const MANIFEST = "manifest.json";
-const HOME_DIR = os.homedir()
 
 const postBuild = async () => {
 	await fs.copyFile(path.join(MANIFEST), path.join(OUT_DIR, MANIFEST));
-	await Promise.all([
+	await Promise.all(process.env.VAULTS.split(',').map(vaultPath => 
 		fs.copy(
 			path.join(OUT_DIR),
-			`${process.env.NOTEBOOK}/.obsidian/plugins/grab-bag`
+			`${vaultPath}/.obsidian/plugins/grab-bag`
 		),
-		fs.copy(
-			path.join(OUT_DIR),
-			`${process.env.PRIVATE}/.obsidian/plugins/grab-bag`
-		),
-	]);
-	console.info("✅ Copied plugin to vault.");
+	);
+	console.info("✅ Copied plugin to vaults.");
 };
 
 esbuild
