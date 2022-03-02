@@ -29,7 +29,7 @@ const postBuild = async () => {
 			path.join(OUT_DIR),
 			`${vaultPath}/.obsidian/plugins/grab-bag`
 		),
-	);
+	));
 	console.info("✅ Copied plugin to vaults.");
 };
 
