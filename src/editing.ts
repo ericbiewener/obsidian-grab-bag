@@ -15,13 +15,18 @@ export const replaceCurrentLine = (
 		{ line: cursor.line, ch: 0 },
 		{ line: cursor.line, ch: oldLineStr.length }
 	);
+
 	editor.setCursor({
 		line: cursor.line,
-    // If `cursor.ch` is 0, simply leaving it at the start of the line is generally the desired
-    // behavior since its position there doesn't indicate a specific spot in the middle of the line.
-    // Thus modifying the line shouldn't modify the cursor position since there is no "spot" to
-    // preserve.
-		ch: cursor.ch ? Math.max(cursor.ch + newLineStr.length - oldLineStr.length, 0) : 0,
+		ch: !oldLineStr
+			? newLineStr.length
+			: // If `cursor.ch` is 0 and the line had some text on it, simply leaving it at the start of the
+			// line is generally the desired behavior since its position there doesn't indicate a specific
+			// spot in the middle of the line. Thus modifying the line shouldn't modify the cursor position
+			// since there is no "spot" to preserve.
+			cursor.ch
+			? Math.max(cursor.ch + newLineStr.length - oldLineStr.length, 0)
+			: 0,
 	});
 };
 
